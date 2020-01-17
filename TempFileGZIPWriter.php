@@ -1,6 +1,6 @@
 <?php
 
-namespace samdark\sitemap;
+namespace alkree\sitemap;
 
 /**
  * Flushes buffer into temporary stream and compresses stream into a file on finish
