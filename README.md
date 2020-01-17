@@ -20,7 +20,7 @@ Installation
 Installation via Composer is very simple:
 
 ```
-composer require samdark/sitemap
+composer require alkree/sitemap
 ```
 
 After that, make sure your application autoloads Composer classes by including
@@ -30,8 +30,8 @@ How to use it
 -------------
 
 ```php
-use samdark\sitemap\Sitemap;
-use samdark\sitemap\Index;
+use alkree\sitemap\Sitemap;
+use alkree\sitemap\Index;
 
 // create sitemap
 $sitemap = new Sitemap(__DIR__ . '/sitemap.xml');
@@ -83,7 +83,7 @@ Multi-language sitemap
 ----------------------
 
 ```php
-use samdark\sitemap\Sitemap;
+use alkree\sitemap\Sitemap;
 
 // create sitemap
 // be sure to pass `true` as second parameter to specify XHTML namespace
