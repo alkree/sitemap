@@ -170,6 +170,9 @@ class Sitemap
         if ($this->useXhtml) {
             $this->writer->writeAttribute('xmlns:xhtml', 'http://www.w3.org/1999/xhtml');
         }
+        if ($this->useImage) {
+            $this->writer->writeAttribute('xmlns:image', 'http://www.google.com/schemas/sitemap-image/1.1');
+        }
 
         /*
          * XMLWriter does not give us much options, so we must make sure, that
@@ -262,7 +265,7 @@ class Sitemap
      *
      * @throws \InvalidArgumentException
      */
-    public function addItem($location, $lastModified = null, $changeFrequency = null, $priority = null)
+    public function addItem($location, $lastModified = null, $changeFrequency = null, $priority = null, $images = [])
     {
         if ($this->urlsCount >= $this->maxUrls) {
             $this->finishFile();
@@ -273,9 +276,9 @@ class Sitemap
         }
 
         if (is_array($location)) {
-            $this->addMultiLanguageItem($location, $lastModified, $changeFrequency, $priority);
+            $this->addMultiLanguageItem($location, $lastModified, $changeFrequency, $priority, $images = []);
         } else {
-            $this->addSingleLanguageItem($location, $lastModified, $changeFrequency, $priority);
+            $this->addSingleLanguageItem($location, $lastModified, $changeFrequency, $priority, $images = []);
         }
 
         $this->urlsCount++;
@@ -298,7 +301,7 @@ class Sitemap
      *
      * @see addItem
      */
-    private function addSingleLanguageItem($location, $lastModified, $changeFrequency, $priority)
+    private function addSingleLanguageItem($location, $lastModified, $changeFrequency, $priority, $images = [])
     {
         $this->validateLocation($location);
 
@@ -347,7 +350,7 @@ class Sitemap
      *
      * @see addItem
      */
-    private function addMultiLanguageItem($locations, $lastModified, $changeFrequency, $priority)
+    private function addMultiLanguageItem($locations, $lastModified, $changeFrequency, $priority, $images = [])
     {
         foreach ($locations as $language => $url) {
             $this->validateLocation($url);
@@ -395,6 +398,14 @@ class Sitemap
                 $this->writer->startAttribute('href');
                 $this->writer->text($href);
                 $this->writer->endAttribute();
+                $this->writer->endElement();
+            }
+            
+            foreach ($images as $image) {
+                $this->writer->startElement('image:image');
+                $this->writer->startElement('image:loc');
+                $this->writer->text($image);
+                $this->writer->endElement();
                 $this->writer->endElement();
             }
 
