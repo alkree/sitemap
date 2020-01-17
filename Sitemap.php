@@ -276,9 +276,9 @@ class Sitemap
         }
 
         if (is_array($location)) {
-            $this->addMultiLanguageItem($location, $lastModified, $changeFrequency, $priority, $images = []);
+            $this->addMultiLanguageItem($location, $lastModified, $changeFrequency, $priority, $images);
         } else {
-            $this->addSingleLanguageItem($location, $lastModified, $changeFrequency, $priority, $images = []);
+            $this->addSingleLanguageItem($location, $lastModified, $changeFrequency, $priority, $images);
         }
 
         $this->urlsCount++;
@@ -333,6 +333,14 @@ class Sitemap
                 );
             }
             $this->writer->writeElement('priority', number_format($priority, 1, '.', ','));
+        }
+        
+        foreach ($images as $image) {
+            $this->writer->startElement('image:image');
+            $this->writer->startElement('image:loc');
+            $this->writer->text($image);
+            $this->writer->endElement();
+            $this->writer->endElement();
         }
 
         $this->writer->endElement();
