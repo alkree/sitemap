@@ -69,6 +69,11 @@ class Sitemap
      * @see https://support.google.com/webmasters/answer/2620865?hl=en
      */
     private $useXhtml = false;
+    
+    /**
+     * @var bool if should Image namespace be specified
+     */
+    private $useImage = false;
 
     /**
      * @var array valid values for frequency parameter
@@ -104,7 +109,7 @@ class Sitemap
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($filePath, $useXhtml = false)
+    public function __construct($filePath, $useXhtml = false, $useImage = false)
     {
         $dir = dirname($filePath);
         if (!is_dir($dir)) {
@@ -115,6 +120,7 @@ class Sitemap
 
         $this->filePath = $filePath;
         $this->useXhtml = $useXhtml;
+        $this->useImage = $useImage;
     }
 
     /**
